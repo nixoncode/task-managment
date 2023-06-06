@@ -1,4 +1,5 @@
-<img src="http://www.opentechglobal.co.ke/wp-content/themes/opentech/includes/img/wildvision-logo.png"/>
+
+![open-tech logo](http://www.opentechglobal.co.ke/wp-content/themes/opentech/includes/img/wildvision-logo.png)
 
 
 
