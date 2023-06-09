@@ -1,0 +1,71 @@
+services:
+  backend:
+    build:
+      args:
+      - NODE_ENV=development
+      context: backend
+      target: development
+    command: npm run dev
+    environment:
+      - DATABASE_DB=test
+      - DATABASE_USER=SA
+      - DATABASE_PASSWORD=db-btf5q
+      - DATABASE_HOST=db
+      - DATABASE_PORT=1433
+      - NODE_ENV=development
+    ports:
+      - 80:80
+      - 9229:9229
+      - 9230:9230
+    secrets:
+      - db-password
+    volumes:
+      - ./backend/src:/code/src:ro
+      - ./backend/package.json:/code/package.json
+      - ./backend/package-lock.json:/code/package-lock.json
+      - back-notused:/opt/app/node_modules
+    networks:
+      - public
+      - private
+    depends_on:
+      - db
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: db-btf5q
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    volumes:
+      - "./drive:/var/opt/mssql"
+    ports:
+        - '1433:1433'
+    networks:
+      - private
+    healthcheck:
+        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P db-btf5q -Q 'SELECT 1' || exit 1"]
+        interval: 10s
+        retries: 10
+        start_period: 10s
+        timeout: 3s
+  frontend:
+    build:
+      context: frontend
+      target: development
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/code/src
+      #- /code/node_modules
+    networks:
+      - public
+    depends_on:
+      - backend
+networks:
+  public:
+  private:
+volumes:
+  back-notused:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
