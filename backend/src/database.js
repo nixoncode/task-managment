@@ -1,17 +1,7 @@
 import knex from "knex";
-import { database } from "./config.js";
+import { env } from "./config/index.js";
+
+import { default as config } from "./config/knexfile.js";
 
 
-export default knex({
-  client: "mssql",
-  connection: {
-    server: database.host,
-    user: database.user,
-    password: database.password,
-    database: database.database,
-    options: {
-      port: database.port,
-      trustServerCertificate: true
-    }
-  }
-});
+export default knex(config[env]);
