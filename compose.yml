@@ -7,7 +7,7 @@ services:
       target: development
     command: npm run dev
     environment:
-      - DATABASE_DB=master
+      - DATABASE_DB=task_manager
       - DATABASE_USER=SA
       - DATABASE_PASSWORD=db-btf5q
       - DATABASE_HOST=db
