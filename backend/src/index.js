@@ -1,7 +1,7 @@
-import app  from "./app.js";
-import { port } from "./config.js";
+import app from "./app.js";
+import { port } from "./config/index.js";
 
-const server = app.listen(port, function() {
+const server = app.listen(port, function () {
   console.log(`api server is ready on port ${port}`);
 });
 
