@@ -8,11 +8,10 @@ const app = express();
 app.use(morgan("common"));
 
 app.get("/", function(req, res, next) {
-  database.raw("select VERSION() version")
-    .then(([rows, columns]) => rows[0])
-    .then((row) => res.json({ message: `Hello from MySQL ${row.version}` }))
+  database.raw("SELECT @@VERSION")
+    .then(([rows, columns]) => rows[''])
+    .then((row) => res.json({ message: `Hello from ${row}` }))
     .catch(next);
 });
-
 
 export default app;

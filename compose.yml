@@ -7,7 +7,7 @@ services:
       target: development
     command: npm run dev
     environment:
-      - DATABASE_DB=test
+      - DATABASE_DB=master
       - DATABASE_USER=SA
       - DATABASE_PASSWORD=db-btf5q
       - DATABASE_HOST=db
@@ -17,13 +17,10 @@ services:
       - 80:80
       - 9229:9229
       - 9230:9230
-    secrets:
-      - db-password
     volumes:
       - ./backend/src:/code/src:ro
       - ./backend/package.json:/code/package.json
       - ./backend/package-lock.json:/code/package-lock.json
-      - back-notused:/opt/app/node_modules
     networks:
       - public
       - private
@@ -33,12 +30,12 @@ services:
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: db-btf5q
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     restart: always
     volumes:
-      - "./drive:/var/opt/mssql"
+      - "./.drive:/var/opt/mssql"
     ports:
-        - '1433:1433'
+        - 1433:1433
     networks:
       - private
     healthcheck:
@@ -66,6 +63,3 @@ networks:
 volumes:
   back-notused:
   db-data:
-secrets:
-  db-password:
-    file: db/password.txt
