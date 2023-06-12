@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "a backend task manager app",
-  "main": "src/app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js --inspect=0.0.0.0:9229",
-    "dev-with-debugger": "nodemon src/index.js --inspect-brk=0.0.0.0:9229",
+    "start": "node index.js",
+    "dev": "nodemon index.js --inspect=0.0.0.0:9229",
+    "dev-with-debugger": "nodemon index.js --inspect-brk=0.0.0.0:9229",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
