@@ -1,6 +1,7 @@
 import { database, env } from "./index.js";
 
 export default {
+
   development: {
     client: "mssql",
     connection: {
@@ -10,9 +11,9 @@ export default {
       database: `${database.database}_${env}`,
       options: {
         port: database.port,
-        trustServerCertificate: true,
-      },
-    },
+        trustServerCertificate: true
+      }
+    }
   },
 
   staging: {
@@ -24,16 +25,16 @@ export default {
       database: `${database.database}_${env}`,
       options: {
         port: database.port,
-        trustServerCertificate: true,
-      },
+        trustServerCertificate: true
+      }
     },
     pool: {
       min: 2,
-      max: 10,
+      max: 10
     },
     migrations: {
-      tableName: "knex_migrations",
-    },
+      tableName: "knex_migrations"
+    }
   },
 
   production: {
@@ -45,15 +46,16 @@ export default {
       database: `${database.database}_${env}`,
       options: {
         port: database.port,
-        trustServerCertificate: true,
-      },
+        trustServerCertificate: true
+      }
     },
     pool: {
       min: 2,
-      max: 10,
+      max: 10
     },
     migrations: {
-      tableName: "knex_migrations",
-    },
-  },
+      tableName: "knex_migrations"
+    }
+  }
+
 };

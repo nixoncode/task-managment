@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "a backend task manager app",
-  "main": "index.js",
+  "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js --inspect=0.0.0.0:9229",
-    "dev-with-debugger": "nodemon index.js --inspect-brk=0.0.0.0:9229",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js --inspect=0.0.0.0:9229",
+    "dev-with-debugger": "nodemon src/index.js --inspect-brk=0.0.0.0:9229",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +22,7 @@
   "author": "nixon kosgei <nkosgey6@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.17.1",
-    "express-validator": "^7.0.1",
     "knex": "^0.95.11",
     "morgan": "^1.10.0",
     "tedious": "^16.1.0"
