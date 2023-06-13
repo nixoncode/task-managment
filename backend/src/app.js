@@ -2,10 +2,12 @@ import express from "express";
 import morgan from "morgan";
 import database from "./database.js";
 import router from "./routes/issues.route.js";
+import bodyParser from "body-parser";
 
 // App
 const app = express();
 
+app.use(bodyParser.json());
 app.use(morgan("common"));
 
 app.get("/", function(req, res, next) {
