@@ -1,10 +1,16 @@
 import { ArrowRightCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline/index.js";
+import { Transition } from "@headlessui/react";
 import { useState } from "react";
+
 
 export default function Home() {
   const [mobileNumber, setMobileNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState();
+  const [showRestOfTheForm, setShowRestOfTheForm] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
 
 
   function continueMobile() {
@@ -13,10 +19,15 @@ export default function Home() {
     fetch(`/api/complainants/${mobileNumber}`)
       .then(res => res.json())
       .then(res => {
-        setMessage(res.message);
-
+        // initialize form with data from server
+        setName(res.complainant.name);
+        setEmail(res.complainant.email);
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+        setShowRestOfTheForm(true);
+      });
   }
 
   return (
@@ -48,35 +59,52 @@ export default function Home() {
                 }
               </button>
             </div>
-            <>
-              <div className="form flex py-2">
-                <input type="text" placeholder="What is your name?"
-                       className="input input-bordered input-primary join-item flex-1"
-                />
-              </div>
-              <div className="form flex py-2">
-                <input type="email" placeholder="Enter your email address"
-                       className="input input-bordered input-primary join-item flex-1"
-                />
-              </div>
-              <div className="form flex py-2">
-                <input type="email" placeholder="Subject"
-                       className="input input-bordered input-primary join-item flex-1"
-                />
-              </div>
-              <div className="form flex py-2">
-              <textarea className="textarea textarea-primary flex-1" placeholder="Enter Description"
-                        rows={5}
-              ></textarea>
-              </div>
-              <button className="btn btn-primary join-item w-full mt-2"
-                      onClick={continueMobile}
-                      disabled={isLoading}
+              <Transition
+              show={showRestOfTheForm}
+                enter="transition-opacity duration-5000"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
               >
-                Submit Issue
-                <PaperAirplaneIcon className="h-6 w-6" />
-              </button>
-            </>
+                <div className="form flex py-2">
+                  <input type="text" placeholder="What is your name?"
+                         className="input input-bordered input-primary join-item flex-1"
+                         value={name}
+                         onChange={event => setName(event.target.value)}
+                  />
+                </div>
+                <div className="form flex py-2">
+                  <input type="email" placeholder="Enter your email address"
+                         className="input input-bordered input-primary join-item flex-1"
+                         value={email}
+                         onChange={event => setEmail(event.target.value)}
+                  />
+                </div>
+                <div className="form flex py-2">
+                  <input type="text" placeholder="Subject"
+                         className="input input-bordered input-primary join-item flex-1"
+                         value={subject}
+                         onChange={event => setSubject(event.target.value)}
+                  />
+                </div>
+                <div className="form flex py-2">
+              <textarea className="textarea textarea-primary flex-1" placeholder="Enter Description"
+                        value={description}
+                        rows={5}
+                        onChange={event => setDescription(event.target.value)}
+              ></textarea>
+                </div>
+                <button className="btn btn-primary join-item w-full mt-2"
+                        onClick={continueMobile}
+                        disabled={isLoading}
+                >
+                  Submit Issue
+                  <PaperAirplaneIcon className="h-6 w-6" />
+                </button>
+              </Transition>
+
             <div className="mb-64"></div>
 
           </div>
