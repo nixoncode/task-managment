@@ -1,4 +1,4 @@
-import { ArrowRightCircleIcon } from "@heroicons/react/24/outline/index.js";
+import { ArrowRightCircleIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline/index.js";
 import { useState } from "react";
 
 export default function Home() {
@@ -12,7 +12,10 @@ export default function Home() {
 
     fetch(`/api/complainants/${mobileNumber}`)
       .then(res => res.json())
-      .then(res => setMessage(res.message))
+      .then(res => {
+        setMessage(res.message);
+
+      })
       .catch(console.error);
   }
 
@@ -29,9 +32,9 @@ export default function Home() {
               are
               committed to providing you with the best possible support, so you can be confident that you are in good
               hands.</p>
-            <div className="join join-vertical md:join-horizontal">
-              <input type="text" placeholder="Enter phone number"
-                     className="input input-bordered input-primary w-full max-w-xs join-item"
+            <div className="join join-vertical md:join-horizontal flex py-2">
+              <input type="tel" placeholder="Enter phone number"
+                     className="input input-bordered input-primary join-item flex-1"
                      onChange={event => setMobileNumber(event.target.value)}
               />
               <button className="btn btn-primary join-item"
@@ -45,8 +48,37 @@ export default function Home() {
                 }
               </button>
             </div>
+            <>
+              <div className="form flex py-2">
+                <input type="text" placeholder="What is your name?"
+                       className="input input-bordered input-primary join-item flex-1"
+                />
+              </div>
+              <div className="form flex py-2">
+                <input type="email" placeholder="Enter your email address"
+                       className="input input-bordered input-primary join-item flex-1"
+                />
+              </div>
+              <div className="form flex py-2">
+                <input type="email" placeholder="Subject"
+                       className="input input-bordered input-primary join-item flex-1"
+                />
+              </div>
+              <div className="form flex py-2">
+              <textarea className="textarea textarea-primary flex-1" placeholder="Enter Description"
+                        rows={5}
+              ></textarea>
+              </div>
+              <button className="btn btn-primary join-item w-full mt-2"
+                      onClick={continueMobile}
+                      disabled={isLoading}
+              >
+                Submit Issue
+                <PaperAirplaneIcon className="h-6 w-6" />
+              </button>
+            </>
             <div className="mb-64"></div>
-            {JSON.stringify(message)}
+
           </div>
         </div>
       </div>
