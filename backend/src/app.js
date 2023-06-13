@@ -1,8 +1,9 @@
+import bodyParser from "body-parser";
 import express from "express";
 import morgan from "morgan";
 import database from "./database.js";
-import router from "./routes/issues.route.js";
-import bodyParser from "body-parser";
+import complainantsRouter from "./routes/complainants.route.js";
+import issuesRouter from "./routes/issues.route.js";
 
 // App
 const app = express();
@@ -17,6 +18,7 @@ app.get("/", function(req, res, next) {
     .catch(next);
 });
 
-app.use("/issues", router);
+app.use("/issues", issuesRouter);
+app.use("/complainants", complainantsRouter);
 
 export default app;
