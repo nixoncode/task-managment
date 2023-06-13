@@ -1,4 +1,4 @@
-import { fetchByPhoneNumber } from "../models/complainants.model.js";
+import { createComplainant, fetchByPhoneNumber } from "../models/complainants.model.js";
 import db from "./../database.js";
 
 export async function create(req, res) {
@@ -11,10 +11,7 @@ export async function create(req, res) {
   if (complainant.hasOwnProperty("id")) {
     complainantId = complainant["id"];
   } else {
-    let insertID = await db("complainants")
-      .insert({ name, email, phone_number: phoneNumber })
-      .returning("id");
-    complainantId = insertID[0];
+    complainantId = createComplainant(name, email, phoneNumber);
   }
 
 
