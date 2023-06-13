@@ -1,5 +1,5 @@
 import { createComplainant, fetchByPhoneNumber } from "../models/complainants.model.js";
-import db from "./../database.js";
+import { createIssue } from "../models/issues.model.js";
 
 export async function create(req, res) {
   const phoneNumber = req.body.phone_number;
@@ -14,11 +14,7 @@ export async function create(req, res) {
     complainantId = createComplainant(name, email, phoneNumber);
   }
 
+  let issueID = await createIssue(complainantId, category_id, subject, description);
 
-  let issueID = await db
-    .insert({ title: subject, description, complainant_id: complainantId, category_id, status_id: 1 })
-    .into("issues")
-    .returning("id");
-
-  return res.status(201).json({ "message": `ticket created successfully with id ${issueID[0]}` });
+  return res.status(201).json({ "message": `ticket created successfully with id ${issueID}` });
 }
