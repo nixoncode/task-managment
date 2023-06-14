@@ -1,5 +1,23 @@
 import db from "./../../database.js";
+import bcrypt from "bcryptjs";
 
 export async function emailExists(email) {
-  return await db("users").select("id").where("email", email).first();
+  let user = await db("users").select("id").where("email", email).first();
+  if (user.hasOwnProperty("id")) {
+    return true;
+  }
+  return false;
+}
+
+export async function createUser(name, email, phone, password) {
+  let insertID = await db("users")
+    .insert({
+      name,
+      email,
+      phone_number: phone,
+      password: bcrypt.hashSync(password),
+    })
+    .returning("id");
+
+  return insertID[0];
 }
