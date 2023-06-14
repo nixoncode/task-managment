@@ -1,20 +1,40 @@
-export const Input = ({ label, type, id, placeholder }) => {
+export const Input = ({
+  label,
+  type,
+  id,
+  placeholder,
+  hasError,
+  error,
+  onChange,
+  value,
+}) => {
+  function handleChange(event) {
+    console.log(event.target.value);
+    if (onChange) {
+      onChange(event.target.value);
+    }
+  }
+
   return (
-    <div className="flex flex-col w-full join join-vertical">
-      <div className="flex justify-between join-item">
-        <label htmlFor={id} className="font-semibold capitalize">
+    <div className="flex flex-col w-full">
+      <div className="flex justify-between">
+        {/* <label htmlFor={id} className="font-semibold capitalize">
           {label}
-        </label>
+        </label> */}
       </div>
       <input
         id={id}
         type={type}
-        className="input input-bordered input-error join-item"
+        className={`input input-bordered ${
+          hasError ? "input-error" : "input-primary"
+        }`}
         placeholder={placeholder}
+        onChange={handleChange}
+        value={value}
       />
-      <span class="text-sm text-error join-item text-left">
-        These credentials do not match our records
-      </span>
+      {hasError && (
+        <span className="text-sm text-error text-left">{error}</span>
+      )}
     </div>
   );
 };
