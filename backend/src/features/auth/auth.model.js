@@ -3,7 +3,18 @@ import bcrypt from "bcryptjs";
 
 export async function emailExists(email) {
   let user = await db("users").select("id").where("email", email).first();
-  if (user.hasOwnProperty("id")) {
+  if (user && user.hasOwnProperty("id")) {
+    return true;
+  }
+  return false;
+}
+
+export async function phoneExists(phone) {
+  let user = await db("users")
+    .select("id")
+    .where("phone_number", phone)
+    .first();
+  if (user && user.hasOwnProperty("id")) {
     return true;
   }
   return false;
