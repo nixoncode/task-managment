@@ -32,3 +32,12 @@ export async function createUser(name, email, phone, password) {
 
   return insertID[0];
 }
+
+export async function fetchUser(email) {
+  let user = await db("users")
+    .select("id", "name", "password")
+    .where("email", email)
+    .first();
+
+  return user;
+}
