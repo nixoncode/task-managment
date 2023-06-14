@@ -7,13 +7,7 @@ export function registerValidationRules() {
       .notEmpty()
       .isString()
       .isLength({ min: 3, max: 60 })
-      .withMessage("name should be at least 3 to 60 characters long")
-      .custom(async value => {
-        const user = await emailExists(value);
-        if (user) {
-          throw new Error("E-mail already in use");
-        }
-      }),
+      .withMessage("name should be at least 3 to 60 characters long"),
 
     body("phone", "phone is required")
       .notEmpty()
@@ -24,7 +18,13 @@ export function registerValidationRules() {
       .notEmpty()
       .isEmail()
       .isLength({ max: 100 })
-      .withMessage("email should be a valid email"),
+      .withMessage("email should be a valid email")
+      .custom(async value => {
+        const user = await emailExists(value);
+        if (user) {
+          throw new Error("E-mail already in use");
+        }
+      }),
 
     body("password", "password should be at least 8 characters long")
       .notEmpty()
