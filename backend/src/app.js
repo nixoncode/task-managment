@@ -4,6 +4,7 @@ import morgan from "morgan";
 import database from "./database.js";
 import complainantsRouter from "./routes/complainants.route.js";
 import issuesRouter from "./routes/issues.route.js";
+import authRoutes from "./features/auth/auth.routes.js";
 
 // App
 const app = express();
@@ -21,5 +22,6 @@ app.get("/", function (req, res, next) {
 
 app.use("/issues", issuesRouter);
 app.use("/complainants", complainantsRouter);
+app.use("/auth", authRoutes);
 
 export default app;
