@@ -1,4 +1,5 @@
 import { body } from "express-validator";
+import { emailExists } from "./auth.model.js";
 
 export function registerValidationRules() {
   return [
@@ -6,7 +7,13 @@ export function registerValidationRules() {
       .notEmpty()
       .isString()
       .isLength({ min: 3, max: 60 })
-      .withMessage("name should be at least 3 to 60 characters long"),
+      .withMessage("name should be at least 3 to 60 characters long")
+      .custom(async value => {
+        const user = await emailExists(value);
+        if (user) {
+          throw new Error("E-mail already in use");
+        }
+      }),
 
     body("phone", "phone is required")
       .notEmpty()
