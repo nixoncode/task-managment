@@ -37,3 +37,7 @@ export async function register(req, res) {
     message: `user registered successfully with id ${result}`,
   });
 }
+
+export function userInfo(req, res) {
+  res.send({ message: "user info" });
+}
