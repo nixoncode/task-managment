@@ -1,6 +1,13 @@
 import { body } from "express-validator";
 import { emailExists, phoneExists } from "./auth.model.js";
 
+const passwordRule = body(
+  "password",
+  "password should be at least 8 characters long",
+)
+  .notEmpty()
+  .isLength({ min: 8 });
+
 export function registerValidationRules() {
   return [
     body("name", "name is required")
@@ -30,9 +37,17 @@ export function registerValidationRules() {
           throw new Error("E-mail already in use");
         }
       }),
+    passwordRule,
+  ];
+}
 
-    body("password", "password should be at least 8 characters long")
+export function loginValidationRules() {
+  return [
+    body("email")
       .notEmpty()
-      .isLength({ min: 8 }),
+      .isEmail()
+      .isLength({ max: 100 })
+      .withMessage("email should be a valid email"),
+    passwordRule,
   ];
 }
