@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { emailExists } from "./auth.model.js";
+import { emailExists, phoneExists } from "./auth.model.js";
 
 export function registerValidationRules() {
   return [
@@ -12,8 +12,13 @@ export function registerValidationRules() {
     body("phone", "phone is required")
       .notEmpty()
       .isMobilePhone("en-KE")
-      .withMessage("phone number is not a valid mobile number"),
-
+      .withMessage("phone number is not a valid mobile number")
+      .custom(async value => {
+        const user = await phoneExists(value);
+        if (user) {
+          throw new Error("Phone number already in use");
+        }
+      }),
     body("email")
       .notEmpty()
       .isEmail()
