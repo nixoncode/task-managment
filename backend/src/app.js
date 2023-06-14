@@ -5,6 +5,7 @@ import database from "./database.js";
 import complainantsRouter from "./routes/complainants.route.js";
 import issuesRouter from "./routes/issues.route.js";
 import authRoutes from "./features/auth/auth.routes.js";
+import userRoutes from "./features/user/user.route.js";
 
 // App
 const app = express();
@@ -23,5 +24,6 @@ app.get("/", function (req, res, next) {
 app.use("/issues", issuesRouter);
 app.use("/complainants", complainantsRouter);
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
 
 export default app;
