@@ -20,3 +20,7 @@ export function signJwt(payload) {
     { expiresIn: "1h" },
   );
 }
+
+export function verifyJwtToken(token) {
+  return jwt.verify(token, jwtSecret);
+}
