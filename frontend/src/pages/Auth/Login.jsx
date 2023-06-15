@@ -19,17 +19,15 @@ export default function Auth() {
     <AuthLayout>
       <h1 className="w-full text-4xl text-center">Login to your account</h1>
       <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-        <div className="">
-          <Input
-            label="Email address"
-            id="email"
-            type="email"
-            placeholder="Enter your email"
-            error=""
-            value={email}
-            onChange={handleChange}
-          />
-        </div>
+        <Input
+          label="Email address"
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          error=""
+          value={email}
+          onChange={handleChange}
+        />
         <Input
           label="Password"
           id="password"
@@ -39,23 +37,15 @@ export default function Auth() {
           onChange={handleChange}
         />
 
-        <div className="relative">
-          <a
-            className="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-indigo-500
-                  rounded-lg transition duration-200 hover:bg-indigo-600 ease"
-          >
-            Submit
-          </a>
-        </div>
+        <a className="btn btn-primary w-full text-xl">Log in</a>
         <p className="text-sm text-center text-gray-400">
-          Don&#x27;t have an account yet?
+          Don't have an account yet?
           <Link
             to="/auth/register"
             className="font-semibold text-primary focus:text-primary focus:outline-none focus:underline"
           >
             &nbsp;Register
           </Link>
-          .
         </p>
       </div>
     </AuthLayout>
