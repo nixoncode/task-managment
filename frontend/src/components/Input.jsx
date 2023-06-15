@@ -3,38 +3,31 @@ export const Input = ({
   type,
   id,
   placeholder,
-  hasError,
   error,
-  onChange,
+  onChange = () => {},
   value,
 }) => {
-  function handleChange(event) {
-    console.log(event.target.value);
-    if (onChange) {
-      onChange(event.target.value);
-    }
-  }
-
   return (
     <div className="flex flex-col w-full">
       <div className="flex justify-between">
-        {/* <label htmlFor={id} className="font-semibold capitalize">
+        <label
+          htmlFor={id}
+          className="pr-2 pl-2 font-medium text-gray-600 capitalize"
+        >
           {label}
-        </label> */}
+        </label>
       </div>
       <input
         id={id}
         type={type}
         className={`input input-bordered ${
-          hasError ? "input-error" : "input-primary"
+          error ? "input-error" : "input-primary"
         }`}
         placeholder={placeholder}
-        onChange={handleChange}
+        onChange={onChange}
         value={value}
       />
-      {hasError && (
-        <span className="text-sm text-error text-left">{error}</span>
-      )}
+      {error && <span className="text-sm text-error text-left">{error}</span>}
     </div>
   );
 };
