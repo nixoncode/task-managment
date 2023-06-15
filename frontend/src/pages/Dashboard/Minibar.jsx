@@ -3,7 +3,7 @@ export default function Minibar() {
     <div>
       <div
         id="minibar"
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar lg:w-20 shrink-0 p-4 bg-base-300 h-full`}
+        className={`flex flex-col absolute z-40 left-0 top-0 hidden lg:block lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar lg:w-20 shrink-0 p-4 bg-base-300 h-full`}
       >
         <div className="space-y-8">
           <div className="avatar online">
