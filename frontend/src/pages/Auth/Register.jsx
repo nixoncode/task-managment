@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AuthLayout from "../../layouts/AuthLayout.jsx";
 import { Input } from "../../components/Input.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [credentials, setCredentials] = useState({
@@ -10,6 +10,8 @@ export default function Register() {
     phone: "",
     password: "",
   });
+  const navigate = useNavigate();
+
   const { name, email, phone, password } = credentials;
 
   const handleChange = e => {
@@ -19,6 +21,30 @@ export default function Register() {
       [id]: value,
     }));
   };
+
+  async function handleSubmit() {
+    try {
+      let result = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+      const data = await result.json();
+      // console.log(result);
+
+      if (result.status === 201) {
+        alert("Registration successful");
+        return navigate("/auth/login");
+      }
+      if (result.status === 422) {
+        alert(data.message, data.errors);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <AuthLayout>
@@ -60,7 +86,12 @@ export default function Register() {
           value={password}
           onChange={handleChange}
         />
-        <a className="btn btn-primary w-full text-xl">Create Account</a>
+        <button
+          onClick={handleSubmit}
+          className="btn btn-primary w-full text-xl"
+        >
+          Create Account
+        </button>
         <p className="text-sm text-center text-gray-400">
           Have an account?
           <Link
