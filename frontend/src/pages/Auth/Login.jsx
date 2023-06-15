@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Input } from "../../components/Input.jsx";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout.jsx";
 
 export default function Auth() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+
   const { email, password } = credentials;
 
   const handleChange = e => {
@@ -14,6 +17,34 @@ export default function Auth() {
       [id]: value,
     }));
   };
+
+  async function handleSubmit() {
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        alert(data.message);
+        localStorage.setItem("token", data.token);
+        return navigate("/dashboard");
+      }
+
+      if (response.status === 422) {
+        alert(data.message);
+        return;
+      }
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <AuthLayout>
@@ -37,7 +68,12 @@ export default function Auth() {
           onChange={handleChange}
         />
 
-        <a className="btn btn-primary w-full text-xl">Log in</a>
+        <button
+          onClick={handleSubmit}
+          className="btn btn-primary w-full text-xl"
+        >
+          Log in
+        </button>
         <p className="text-sm text-center text-gray-400">
           Don't have an account yet?
           <Link
